@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 /src/content
 /src/assets
+
+.vscode
+.wrangler
