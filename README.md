@@ -7,6 +7,7 @@ Built with Astro, deployed with cloudflare
 ToDo:
 - More posts (backfill)
 - Strands
+- Reactions
 - Comments (words)
 
 
