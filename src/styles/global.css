@@ -290,11 +290,32 @@ a:hover {
 				
       }
 
+.descr {
+	margin: 0.5em 0;
+	color: var(--text);
+	font-size: 0.9em;
+	line-height: 1.4;
+}
 
 
+.note {
+	display: block;
+	padding: 0.5em;
+	margin: 1em 0;
+	border-left: 4px solid var(--accent);
+	background-color: var(--surface);
+	box-shadow: var(--box-shadow);
+	border-radius: 8px;
+	color: var(--text);
+	font-size: 1em;
+}
 
+.highlight {
+	background-color: var(--accent);
+	color: var(--text);
+	padding: 0 5px;
 
-
+}
 
 /* Headings */
 h1,
@@ -309,6 +330,7 @@ h6 {
 
 /* Code blocks */
 code {
+	font-size: 0.9em;
 	padding: 2px 5px;
 	background-color: var(--code-bg);
 	border-radius: 2px;
@@ -319,7 +341,7 @@ pre {
 	padding: 1.5em;
 	border-radius: 8px;
 	background: var(--code-bg);
-	box-shadow: var(--box-shadow);
+	/* box-shadow: var(--box-shadow); */
 }
 
 pre>code {
@@ -346,7 +368,7 @@ td {
 }
 
 main {
-	width: 720px;
+	width: 980px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
@@ -421,7 +443,7 @@ blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
 	margin: 0px;
-	font-size: 1.333em;
+	/* font-size: 1.333em; */
 }
 
 @media (max-width: 720px) {

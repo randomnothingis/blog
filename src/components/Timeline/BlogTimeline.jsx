@@ -14,13 +14,13 @@ export default function BlogTimeline({ posts }) {
   return (
     <>
       <div className="category-selector" style={{marginBottom:'2em', justifySelf:'center', display: 'flex', flexDirection: 'row', alignItems: 'center', alignSelf:'center' }} >
-        <button
+        {/* <button
           className={`color-btn${selectedSection === "All" ? " selected" : ""}`}
           onClick={() => setSelectedSection("All")}
         >
           All
-        </button>
-        {taxonomy.main_sections.map((section) => (
+        </button> */}
+        {/* {taxonomy.main_sections.map((section) => (
           <div
             key={section.name}
             
@@ -33,7 +33,7 @@ export default function BlogTimeline({ posts }) {
             </button>
           </div>
         ))
-        }
+        } */}
       </div>
 
     {filteredPosts.length > 0? (
