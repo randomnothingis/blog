@@ -1,0 +1,79 @@
+{
+ "main_sections": [
+  {
+   "name": "Media & Information",
+   "description": "Analysis of media trends, journalism, and information networks",
+   "tags": [
+    "journalism",
+    "media ownership",
+    "information networks",
+    "news business",
+    "audience trends"
+   ]
+  },
+  {
+   "name": "Technology & Future",
+   "description": "Exploration of technology trends, AI, and future scenarios",
+   "tags": [
+    "artificial intelligence",
+    "digital transformation",
+    "future trends",
+    "information technology"
+   ]
+  },
+  {
+   "name": "Geopolitics & Conflict",
+   "description": "Analysis of global conflicts and geopolitical issues",
+   "tags": [
+    "Ukraine",
+    "Russia",
+    "occupied territories",
+    "conflict analysis"
+   ]
+  },
+  {
+   "name": "Data & Visualization",
+   "description": "Data analysis techniques and visualization methods",
+   "tags": [
+    "data visualization",
+    "data analysis",
+    "information science"
+   ]
+  },
+  {
+   "name": "Book Reviews",
+   "description": "Reviews and discussions of notable books",
+   "tags": [
+    "book review",
+    "authors",
+    "literature"
+   ]
+  }
+ ],
+ "all_tags": [
+  "journalism",
+  "media ownership",
+  "information networks",
+  "news business",
+  "audience trends",
+  "artificial intelligence",
+  "digital transformation",
+  "future trends",
+  "information technology",
+  "Ukraine",
+  "Russia",
+  "occupied territories",
+  "conflict analysis",
+  "data visualization",
+  "data analysis",
+  "information science",
+  "book review",
+  "authors",
+  "literature",
+  "technology",
+  "truth",
+  "fallibility",
+  "property seizure"
+ ],
+ "taxonomy_notes": "Merged 'AI' into 'artificial intelligence'. Combined 'technology trends' and 'future' into 'future trends'. Grouped author names under a general 'authors' tag. Removed specific book titles and kept general 'book review' tag."
+}
