@@ -8,7 +8,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, colour } = Astro.props;
 ---
 
 <html lang="en">
@@ -32,12 +32,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin: 0 auto;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
+				width: 100%;
 			}
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
+				width: 1030px;
+				/* max-width: calc(100% - 2em); */
 				margin: auto;
-				padding: 1em;
+				/* padding: 1em; */
 				color: rgb(var(--gray-dark));
 			}
 			.title {

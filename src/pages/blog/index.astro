@@ -1,167 +1,26 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import BlogTimeline from '../../components/Timeline/BlogTimeline.jsx';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-            .timeline-container {
-                position: relative;
-                width: 100%;
-                padding: 2em 0;
-            }
-            .timeline-line {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 10%;
-                width: 4px;
-                background: var(--border);
-                z-index: 0;
-            }
-            ul {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                gap: 3em;
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                z-index: 1;
-            }
-            .post-entry {
-                position: relative;
-                /* width: 50%; */
-                margin-left: 15%;
-                background: var(--bg);
-                box-shadow: var(--box-shadow);
-                border-radius: 8px;
-                padding: 1em;
-                display: flex;
-                flex-direction: row;
-                align-items: self-start;
-								/* justify-content: space-between; */
-								flex:1;
-								width: 100%;
-							
-            }
-						.post-entry:hover {
-								box-shadow: var(--accent-shadow);
-						}
-
-            .post-entry::before {
-                content: '';
-                position: absolute;
-                top: 2.26em;
-                left: -44px;
-                width: 16px;
-                height: 16px;
-                background: var(--accent);
-                border-radius: 50%;
-                border: 2px solid var(--bg);
-                z-index: 2;
-            }
-            .post-entry::after {
-                content: '';
-                position: absolute;
-                top: 2.7em;
-                left: -24px;
-                width: 24px;
-                height: 4px;
-                background: var(--border);
-                border-radius: 2px;
-                z-index: 1;
-            }
-            @media (max-width: 720px) {
-                .timeline-line {
-                    left: 0;
-                    width: 4px;
-                }
-                .post-entry {
-                    width: 100%;
-                    margin-left: 32px;
-                }
-                .post-entry::before {
-                    left: -24px;
-                }
-                .post-entry::after {
-                    left: -8px;
-                    width: 8px;
-                }
-            }
-						a {
-								text-decoration: none;
-						}
-						.title {
-								text-align: left ;
-								display: flex;
-								flex:1;
-						}
-						.post-link{
-							align-self: flex-end;
-							display: flex;
-							text-decoration: none;
-							color: var(--text);
-							flex:1;
-						}
-						.date {
-								font-size: 0.6em;
-								/* width:50%; */
-								text-wrap: wrap;
-								/* color: rgb(var(--gray)); */
-								/* margin-right: 0.5em; */
-								padding-right: 5px ;
-								margin: 10px 10px;
-								
-						}
-
-						
-        </style>
-    </head>
-    <body>
-        <Header />
-        <main>
-            <section class="timeline-container">
-                <div class="timeline-line"></div>
-                <ul>
-                    {
-                        posts.map((post) => (
-                            <li class="post-entry" > 
-
-															<a class="post-link" href={`/blog/${post.id}/`}>
-
-																<p class="date" >
-																	<FormattedDate date={post.data.pubDate} />															
-																</p>
-
-																<div class="title">
-																	{post.data.title}
-																</div>
-
-																{post.data.heroImage && (
-																	<Image height='100'  src={post.data.heroImage} alt="" />
-																)}
-
-															</a>
-
-                            </li>
-                        ))
-                    }
-                </ul>
-            </section>
-        </main>
-        <Footer />
-    </body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <BlogTimeline client:visible posts={posts} />
+    </main>
+    <Footer />
+  </body>
 </html>
