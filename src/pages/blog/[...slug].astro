@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import LikeButton from '../../components/LikeButton';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -17,4 +18,7 @@ const { Content } = await render(post);
 
 <BlogPost {...post.data}>
 	<Content />
+
+<LikeButton client:load />
+
 </BlogPost>
