@@ -20,7 +20,8 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "sharp": "^0.34.2",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "hono": "4.10.1"
   },
   "devDependencies": {
     "wrangler": "^4.28.0"
