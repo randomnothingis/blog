@@ -19,6 +19,12 @@
 			"pattern": "randomnothingis.org",
 			"custom_domain": true
 		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "PAGE_LIKE_COUNT",
+			"id": "58d7e316f1214604bd8dc270068de233"
+		}
 	]
 	/**
 	 * Smart Placement

@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import LikeIcon from '../assets/heart-svgrepo-com.svg';
 
 
-
-
-const LikeButton = () => {
+const LikeButton = ({page}) => {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     console.log(liked);
   }, [liked]);
 
-  const toggleLike = () => {
+  const toggleLike = async () => {
     const newLikedState = !liked;
     setLiked(newLikedState);
+
+    const sentLike = await fetch('/api/like', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ postId: page.id, liked: newLikedState }),
+    });
     
   };
 
   return (
-      <div onClick={toggleLike} style={{cursor: 'pointer', fontSize: '1.5em', userSelect: 'none'}}>
+      <div  >
+        <span onClick={toggleLike} className="like-button" >
 
-        {liked ? '❤️' : '🤍'}
+        {liked ? 
+        ('❤️ Thank you') : 
+        (
+          '🤍'
+        )}
+        </span>
+
       </div>
     
   );
