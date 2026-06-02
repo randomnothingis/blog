@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import LikeIcon from '../assets/heart-svgrepo-com.svg';
+
 
 
 const LikeButton = ({page}) => {
@@ -30,7 +30,7 @@ const LikeButton = ({page}) => {
         {liked ? 
         ('❤️ Thank you') : 
         (
-          '🤍'
+          '🤍' 
         )}
         </span>
 

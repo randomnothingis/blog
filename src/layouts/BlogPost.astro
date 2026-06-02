@@ -6,9 +6,18 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type TocHeading = {
+	depth: number;
+	slug: string;
+	text: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, colour } = Astro.props;
+type Props = CollectionEntry<'blog'>['data'] & {
+	headings?: TocHeading[];
+};
+
+const { title, description, pubDate, updatedDate, heroImage, headings = [] } = Astro.props;
+const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 4);
 ---
 
 <html lang="en">
@@ -34,10 +43,23 @@ const { title, description, pubDate, updatedDate, heroImage, colour } = Astro.pr
 				box-shadow: var(--box-shadow);
 				width: 100%;
 			}
-			.prose {
-				max-width: 1030px;
+			.article-layout {
+				display: grid;
+				grid-template-columns: minmax(180px, 240px) minmax(0, 860px) minmax(180px, 240px);
+				gap: 2rem;
+				align-items: start;
 				width: calc(100% - 2em);
-				margin: auto;
+				max-width: 1404px;
+				margin: 0 auto;
+			}
+			.article-layout::before {
+				content: '';
+			}
+			.prose {
+				grid-column: 2;
+				max-width: 860px;
+				width: 100%;
+				margin: 0;
 				/* padding: 1em; */
 				color: rgb(var(--gray-dark));
 			}
@@ -57,6 +79,98 @@ const { title, description, pubDate, updatedDate, heroImage, colour } = Astro.pr
 			.last-updated-on {
 				font-style: italic;
 			}
+			.table-of-contents {
+				position: sticky;
+				top: 1rem;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: flex-start;
+				max-height: calc(100vh - 2rem);
+				overflow: auto;
+				padding-left: 1rem;
+				border-left: 1px solid var(--border);
+				font-size: 0.78em;
+				line-height: 1.4;
+			}
+			.table-of-contents {
+				grid-column: 3;
+			}
+			.table-of-contents h2 {
+				margin: 0 0 0.75rem;
+				font-size: 1rem;
+				line-height: 1.2;
+			}
+			.table-of-contents ol {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.table-of-contents a {
+				color: var(--text);
+				display: block;
+			}
+			.table-of-contents a:hover {
+				color: var(--accent);
+			}
+			.table-of-contents a.is-active,
+			.mobile-table-of-contents a.is-active {
+				color: var(--accent);
+				font-weight: 700;
+			}
+			.table-of-contents a.is-active {
+				text-shadow: var(--accent-shadow);
+			}
+			.table-of-contents .depth-3 {
+				padding-left: 1rem;
+			}
+			.table-of-contents .depth-4 {
+				padding-left: 2rem;
+			}
+			.mobile-table-of-contents {
+				display: none;
+				margin: 0 0 2rem;
+				padding: 1rem 0;
+				border-top: 1px solid var(--border);
+				border-bottom: 1px solid var(--border);
+			}
+			.mobile-table-of-contents summary {
+				cursor: pointer;
+				font-weight: 700;
+			}
+			.mobile-table-of-contents ol {
+				margin: 1rem 0 0;
+			}
+			.mobile-table-of-contents li + li {
+				margin-top: 0.5rem;
+			}
+			.mobile-table-of-contents .depth-3 {
+				margin-left: 1rem;
+			}
+			.mobile-table-of-contents .depth-4 {
+				margin-left: 2rem;
+			}
+			@media (max-width: 1180px) {
+				.article-layout {
+					display: block;
+					max-width: 1030px;
+				}
+				.article-layout::before {
+					content: none;
+				}
+				.prose {
+					max-width: 1030px;
+				}
+				.table-of-contents {
+					display: none;
+				}
+				.mobile-table-of-contents {
+					display: block;
+				}
+			}
 		</style>
 	</head>
 
@@ -67,25 +181,97 @@ const { title, description, pubDate, updatedDate, heroImage, colour } = Astro.pr
 				<div class="hero-image">
 					{heroImage && <Image  src={heroImage} alt="" />}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<h1>{title}</h1>
-						<hr />
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+				<div class="article-layout">
+					<div class="prose">
+						<div class="title">
+							<h1>{title}</h1>
+							<hr />
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<div class="last-updated-on">
+											Last updated on <FormattedDate date={updatedDate} />
+										</div>
+									)
+								}
+							</div>
 						</div>
+						{
+							tocHeadings.length > 0 && (
+								<details class="mobile-table-of-contents">
+									<summary>Table of contents</summary>
+									<ol>
+										{tocHeadings.map((heading) => (
+											<li class={`depth-${heading.depth}`}>
+												<a href={`#${heading.slug}`} data-toc-link={heading.slug}>{heading.text}</a>
+											</li>
+										))}
+									</ol>
+								</details>
+							)
+						}
+						<slot />
 					</div>
-					<slot />
+					{
+						tocHeadings.length > 0 && (
+							<nav class="table-of-contents" aria-label="Table of contents">
+								<h2>Contents</h2>
+								<ol>
+									{tocHeadings.map((heading) => (
+										<li class={`depth-${heading.depth}`}>
+											<a href={`#${heading.slug}`} data-toc-link={heading.slug}>{heading.text}</a>
+										</li>
+									))}
+								</ol>
+							</nav>
+						)
+					}
 				</div>
 			</article>
 		</main>
 		<Footer />
+		<script>
+			const tocLinks = Array.from(document.querySelectorAll('[data-toc-link]'));
+			const sectionHeadings = tocLinks
+				.map((link) => {
+					const id = link.getAttribute('data-toc-link');
+					return id ? document.getElementById(id) : null;
+				})
+				.filter(Boolean);
+			let ticking = false;
+
+			const setActiveSection = () => {
+				const activationLine = window.innerHeight * 0.38;
+				const activeHeading =
+					sectionHeadings.findLast((heading) => heading.getBoundingClientRect().top <= activationLine) ??
+					sectionHeadings[0];
+
+				tocLinks.forEach((link) => {
+					const isActive = link.getAttribute('data-toc-link') === activeHeading?.id;
+					link.classList.toggle('is-active', isActive);
+					if (isActive) {
+						link.setAttribute('aria-current', 'true');
+					} else {
+						link.removeAttribute('aria-current');
+					}
+				});
+
+				ticking = false;
+			};
+
+			const requestActiveSectionUpdate = () => {
+				if (!ticking) {
+					window.requestAnimationFrame(setActiveSection);
+					ticking = true;
+				}
+			};
+
+			if (tocLinks.length > 0 && sectionHeadings.length > 0) {
+				setActiveSection();
+				window.addEventListener('scroll', requestActiveSectionUpdate, { passive: true });
+				window.addEventListener('resize', requestActiveSectionUpdate);
+			}
+		</script>
 	</body>
 </html>
